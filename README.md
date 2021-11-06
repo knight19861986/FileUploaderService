@@ -5,11 +5,11 @@
 #### SpringBoot: 2.5.6
 ## Environment
 It could run on Mac/Linux with the current version of code.  
-If need to run on Windows, it is suggested to firsrly edit the file of :
+If need to run on Windows, it is recommended to firstly  edit the file of:
 ```
 src/main/resources/application.properties
 ```
-To comment the line of:
+Comment the line of:
 ```
 files.root-dir=${HOME}/file-uploader-service/files
 ```
@@ -22,7 +22,7 @@ Then build and run
 ## Before run:
 #### To build 
 ```
-mvn clean pachage
+mvn clean package
 ```
 #### To run the server
 ```

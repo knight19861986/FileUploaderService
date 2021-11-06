@@ -3,6 +3,19 @@
 #### JAVA: 11
 #### Maven: 3.5.3
 #### SpringBoot: 2.5.6
+## Environment
+It could run on Mac/Linux with the current version of code.
+If need to run on Windows, 
+it is suggested to edit the file of src/main/resources/application.properties:
+comment the line of:
+```
+files.root-dir=${HOME}/file-uploader-service/files
+```
+uncomment the line of: 
+#files.root-dir=C:\\file-uploader-service\\files
+```
+then build and run
+
 ## Before run:
 #### To build 
 ```

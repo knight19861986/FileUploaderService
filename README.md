@@ -4,8 +4,8 @@
 #### Maven: 3.5.3
 #### SpringBoot: 2.5.6
 ## Environment
-It could run on Mac/Linux with the current version of code.  
-If need to run on Windows, it is recommended to firstly  edit the file of:
+It is able to run on Mac/Linux with the current version of code.  
+If it is required to run on Windows, it is recommended to firstly  edit the file of:
 ```
 src/main/resources/application.properties
 ```

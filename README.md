@@ -13,7 +13,30 @@ mvn clean pachage
 java -jar file-uploader-service-0.0.1-SNAPSHOT.jar
 ```
 #### Example of interaction with the endpoints
-###### To up load file with tag
+###### To view all uploaded files
+```
+curl -v http://localhost:8080/api
+```
+###### To upload file
+```
+curl -v -X POST -F "file=@./dummy" http://localhost:8080/api/upload
+```
+###### To upload file with one tag
 ```
 curl -v -X POST -F "file=@./receipt.txt" -F "tag=Finance" http://localhost:8080/api/upload
 ```
+###### To upload file with tags
+```
+curl -v -X POST -F "file=@./contract.pdf" -F "tag=Finance" -F "tag=Contracts" http://localhost:8080/api/upload
+```
+###### To download file
+```
+curl -v http://localhost:8080/api/download/receipt.txt --output receipt.txt
+```
+###### To view files with tag
+```
+curl -v http://localhost:8080/api/category?tag=Contracts
+```
+
+
+

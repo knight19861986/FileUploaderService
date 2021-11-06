@@ -17,6 +17,4 @@ public class Constants {
     public static final String TAG_FINANCE = "Finance";
     public static final String TAG_CONTRACTS= "Contracts";
 
-    public static final String MARK_Q = "tag";
-
 }

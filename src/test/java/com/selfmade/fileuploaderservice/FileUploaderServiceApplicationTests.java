@@ -1,7 +1,13 @@
 package com.selfmade.fileuploaderservice;
 
 import com.selfmade.fileuploaderservice.storage.IStorageService;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,7 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.junit.jupiter.api.Assertions;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.ArrayList;
@@ -21,6 +26,7 @@ import java.util.List;
 import static com.selfmade.fileuploaderservice.Constants.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class FileUploaderServiceApplicationTests {
 
     @Autowired
@@ -31,7 +37,20 @@ class FileUploaderServiceApplicationTests {
     private @Qualifier("main")
     IStorageService storageService;
 
+    @BeforeEach
+    public void setup(){
+        this.storageService.init();
+
+    }
+
+    @AfterEach
+    public void teardown(){
+        this.storageService.clear();
+
+    }
+
     @Test
+    @Order(1)
     void testUploadAndDownLoadSingleFile() throws Exception {
         ResponseEntity<String> response;
 
@@ -46,6 +65,7 @@ class FileUploaderServiceApplicationTests {
     }
 
     @Test
+    @Order(2)
     void testUploadMultipleFiles() throws Exception {
         String urlForGet;
         postFile(FILE_NAME_TXT);
@@ -80,5 +100,6 @@ class FileUploaderServiceApplicationTests {
     private ResponseEntity<String> postFile(String fileName) {
         return postFile(fileName, null);
     }
+
 
 }

@@ -70,7 +70,7 @@ public class Controller {
     }
 
     //TODO: In production maybe we don't need to clear all files after shutting down
-    @PreDestroy
+    //@PreDestroy
     void clearFiles() {
         this.storageService.clear();
     }

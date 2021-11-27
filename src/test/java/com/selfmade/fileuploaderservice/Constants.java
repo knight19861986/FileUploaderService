@@ -10,11 +10,13 @@ public class Constants {
     public static final String PATH_UPLOAD = "/upload";
     public static final String PATH_DOWNLOAD= "/download";
     public static final String PATH_CATEGORY= "/category";
+    public static final String PATH_TAGGING= "/tagging";
 
     public static final String PARAM_FILE = "file";
     public static final String PARAM_TAG = "tag";
 
     public static final String TAG_FINANCE = "Finance";
     public static final String TAG_CONTRACTS= "Contracts";
+    public static final String TAG_TEST= "Test";
 
 }

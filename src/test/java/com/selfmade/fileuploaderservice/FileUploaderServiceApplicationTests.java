@@ -85,6 +85,32 @@ class FileUploaderServiceApplicationTests {
 
     }
 
+    @Test
+    @Order(3)
+    void testTagging() throws Exception {
+        String urlForGet;
+        postFile(FILE_NAME_TXT);
+        postFile(FILE_NAME_PNG);
+        postFile(FILE_NAME_PDF);
+
+        urlForGet = UriComponentsBuilder.fromPath(PATH_CATEGORY)
+                .queryParam(PARAM_TAG, TAG_TEST).toUriString();
+        Assertions.assertEquals(0, restTemplate.getForObject(urlForGet, List.class).size());
+
+        postTag(FILE_NAME_TXT,new ArrayList<>(Arrays.asList(TAG_TEST)));
+        postTag(FILE_NAME_PNG,new ArrayList<>(Arrays.asList(TAG_TEST)));
+        postTag(FILE_NAME_PDF,new ArrayList<>(Arrays.asList(TAG_TEST)));
+
+        urlForGet = UriComponentsBuilder.fromPath(PATH_CATEGORY)
+                .queryParam(PARAM_TAG, TAG_TEST).toUriString();
+        Assertions.assertEquals(3, restTemplate.getForObject(urlForGet, List.class).size());
+
+    }
+
+    private ResponseEntity<String> postFile(String fileName) {
+        return postFile(fileName, null);
+    }
+
     private ResponseEntity<String> postFile(String fileName, List<String> tags) {
         MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
         ClassPathResource resource = new ClassPathResource(fileName, getClass());
@@ -97,9 +123,14 @@ class FileUploaderServiceApplicationTests {
         return this.restTemplate.postForEntity(PATH_UPLOAD, map, String.class);
     }
 
-    private ResponseEntity<String> postFile(String fileName) {
-        return postFile(fileName, null);
+    private ResponseEntity<String> postTag(String fileName, List<String> tags) {
+        MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+        if (tags != null) {
+            tags.stream().forEach(tag -> {
+                map.add(PARAM_TAG, tag);
+            });
+        }
+        return this.restTemplate.postForEntity(PATH_TAGGING + PATH_SLASH + fileName, map, String.class);
     }
-
 
 }

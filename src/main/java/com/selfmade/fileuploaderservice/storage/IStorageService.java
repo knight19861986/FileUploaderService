@@ -9,6 +9,7 @@ public interface IStorageService {
 
     void init();
     void storeFile(MultipartFile file);
+    boolean fileExisting(String fileName);
     Resource loadFile(String fileName);
     List<String> listFiles();
     void clear();

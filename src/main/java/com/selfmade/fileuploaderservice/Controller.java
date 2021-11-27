@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.PreDestroy;
+//import javax.annotation.PreDestroy;
 
 import java.util.Arrays;
 import java.util.List;
@@ -56,12 +56,28 @@ public class Controller {
     public String uploadFile(@RequestParam("file") MultipartFile file,
                              @RequestParam(value = "tag", required = false) String[] tags) {
         this.storageService.storeFile(file);
+        addTags(file.getOriginalFilename(), tags);
+        return "Succeeded to upload file: " + file.getOriginalFilename() + "\n";
+    }
+
+    @PostMapping("/tagging/{fileName}")
+    public String tagging(@PathVariable String fileName,
+                         @RequestParam(value = "tag", required = false) String[] tags){
+        if(this.storageService.fileExisting(fileName)){
+            addTags(fileName, tags);
+            return "Succeeded to tag file: " + fileName + "\n";
+        }
+        else
+            return "File not existing";
+
+    }
+
+    private void addTags(String fileName, String[]tags){
         if (tags != null && tags.length > 0) {
             Arrays.stream(tags).forEach(tag -> {
-                this.category.addFile(tag, file.getOriginalFilename());
+                this.category.addFile(tag, fileName);
             });
         }
-        return "Succeeded to upload file: " + file.getOriginalFilename() + "\n";
     }
 
     @ExceptionHandler(StorageException.class)
@@ -70,9 +86,9 @@ public class Controller {
     }
 
     //TODO: In production maybe we don't need to clear all files after shutting down
-    //@PreDestroy
-    void clearFiles() {
-        this.storageService.clear();
-    }
+//    @PreDestroy
+//    void clearFiles() {
+//        this.storageService.clear();
+//    }
 
 }

@@ -20,6 +20,11 @@ public class CloudStorageService implements IStorageService {
     }
 
     @Override
+    public boolean fileExisting(String fileName) {
+        return false;
+    }
+
+    @Override
     public Resource loadFile(String fileName) {
 
         return null;

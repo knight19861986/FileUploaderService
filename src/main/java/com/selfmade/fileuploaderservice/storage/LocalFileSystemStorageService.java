@@ -59,6 +59,22 @@ public class LocalFileSystemStorageService implements IStorageService {
     }
 
     @Override
+    public boolean fileExisting(String fileName) {
+        try {
+            Path file = this.filesRootPath.resolve(fileName);
+            Resource resource = new UrlResource(file.toUri());
+            if (resource.exists() || resource.isReadable()) {
+                return true;
+            } else {
+                throw new StorageException("Could not read file: " + fileName);
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            throw new StorageException("Could not read file: " + fileName, e);
+        }
+    }
+
+    @Override
     public Resource loadFile(String fileName) {
         try {
             Path file = this.filesRootPath.resolve(fileName);
